@@ -48,7 +48,7 @@ const texto3 = [
     "",
     "espero que aproveite...",
     "",
-    "Um feliz nata, e... eu sinto muito sua falta:)",
+    "Um feliz natal, e... eu sinto muito sua falta:)",
     "Me desculpe qualquer coisinha, posso ser dificil mas voce ainda sempre sera uma irma pra mim",
     "",
     "Chega de falar e vamos la!:D"
@@ -405,7 +405,7 @@ document.getElementById('fechar-repo').addEventListener('click', () => fecharMod
 document.getElementById('fechar-diversao').addEventListener('click', () => fecharModalAnimado(modalDiversao));
 
 document.getElementById('ir-repo').addEventListener('click', () => {
-    window.location.href = "https://github.com/DimitrisMilonopoulos/mitsugen";
+    window.location.href = "https://github.com/eiriq/feliz-natal";
 });
 
 document.getElementById('ir-diversao').addEventListener('click', () => {
