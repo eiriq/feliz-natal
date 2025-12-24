@@ -58,9 +58,11 @@ const arquivos = [
     '1.jpg', '2.jpg', '3.jpg', '4.webp', '5.webp', 
     '6.webp', '7.webp', '8.webp', '9.webp', '10.webp',
     '11.webp', '12.webp', '13.jpg', '14.webp', '15.jpg',
-    '16.mp4', '17.png', '18.png', '19.png', '20.jpg',
+    'https://files.catbox.moe/ncp3nb.mp4',
+    '17.png', '18.png', '19.png', '20.jpg',
     '21.jpg', '22.jpg', '23.jpg'
 ];
+
 
 async function digitarTexto(texto, elemento, velocidade = 30, limpar = true) {
     if(limpar) elemento.innerHTML = '';
@@ -93,41 +95,33 @@ function ativarTelaCheia() {
     }
 }
 
-// --- EFEITO DE NEVE ---
 function iniciarNeve() {
     const container = document.getElementById('snow-container');
-    const numeroFlocos = 25; // Poucos flocos para não pesar GPU
+    const numeroFlocos = 25; 
     
     for (let i = 0; i < numeroFlocos; i++) {
         const floco = document.createElement('div');
         floco.classList.add('snowflake');
         floco.innerHTML = '❄';
         
-        // Posição horizontal aleatória
         floco.style.left = Math.random() * 100 + 'vw';
         
-        // Tamanho aleatório
         const tamanho = Math.random() * 10 + 10 + 'px';
         floco.style.fontSize = tamanho;
         
-        // Duração da queda aleatória (5s a 10s)
         const duracao = Math.random() * 5 + 5 + 's';
         floco.style.animationDuration = duracao;
         
-        // Atraso aleatório para não começarem todos juntos
         floco.style.animationDelay = Math.random() * 5 + 's';
         
-        // Opacidade variável
         floco.style.opacity = Math.random() * 0.5 + 0.3;
         
         container.appendChild(floco);
     }
 }
 
-// --- SISTEMA DE ANIMAÇÃO DE MODAL ---
 function abrirModalAnimado(dialogElemento) {
     dialogElemento.showModal();
-    // Força o navegador a renderizar o estado 'open' antes de aplicar a classe de animação
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             dialogElemento.classList.add('dialog-animado');
@@ -137,7 +131,6 @@ function abrirModalAnimado(dialogElemento) {
 
 function fecharModalAnimado(dialogElemento) {
     dialogElemento.classList.remove('dialog-animado');
-    // Espera a transição CSS terminar antes de fechar
     setTimeout(() => {
         dialogElemento.close();
     }, 300);
@@ -270,7 +263,7 @@ function irParaGaleria() {
     secaoIntro.style.display = 'none';
     secaoGaleria.style.display = 'block';
     
-    iniciarNeve(); // Inicia neve aqui
+    iniciarNeve(); 
 
     audioSensational.volume = 0.5;
     audioSensational.play().catch(e => console.log("Erro sensational:", e));
@@ -306,8 +299,8 @@ function iniciarGaleria() {
         card.className = 'card-midia';
         card.style.animationDelay = `${index * 0.05}s`;
 
-        const ehVideo = arquivo.endsWith('.mp4');
-        const src = `Imagens/${arquivo}`;
+        const ehVideo = arquivo.endsWith('.mp4') || arquivo.includes('drive.google.com');
+        const src = arquivo.startsWith('http') ? arquivo : `Imagens/${arquivo}`;
 
         const overlay = document.createElement('div');
         overlay.className = 'overlay-card';
@@ -346,8 +339,6 @@ function iniciarGaleria() {
     });
 }
 
-// --- Lógica de Modais e Lightbox ---
-
 function abrirLightbox(src, ehVideo) {
     alvoLightbox.innerHTML = '';
     
@@ -355,17 +346,28 @@ function abrirLightbox(src, ehVideo) {
         audioSensational.pause();
         atualizarIconeGaleria(false);
 
-        const vid = document.createElement('video');
-        vid.src = src;
-        vid.controls = true;
-        vid.autoplay = true;
-        vid.className = 'midia-lightbox';
-        alvoLightbox.appendChild(vid);
-        
-        vid.onended = () => {
-            audioSensational.play();
-            atualizarIconeGaleria(true);
-        };
+        if(src.includes('drive.google.com')) {
+            const iframe = document.createElement('iframe');
+            iframe.src = src;
+            iframe.className = 'midia-lightbox';
+            iframe.allow = 'autoplay';
+            iframe.style.border = 'none';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            alvoLightbox.appendChild(iframe);
+        } else {
+            const vid = document.createElement('video');
+            vid.src = src;
+            vid.controls = true;
+            vid.autoplay = true;
+            vid.className = 'midia-lightbox';
+            alvoLightbox.appendChild(vid);
+            
+            vid.onended = () => {
+                audioSensational.play();
+                atualizarIconeGaleria(true);
+            };
+        }
     } else {
         const img = document.createElement('img');
         img.src = src;
