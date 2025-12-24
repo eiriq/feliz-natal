@@ -1,0 +1,687 @@
+:root {
+    --md-red-10: #33050f;
+    --md-red-20: #5c0f1f;
+    --md-red-30: #801b35;
+    --md-red-40: #a1314a;
+    --md-red-50: #c23e5e;
+    --md-red-70: #ff6b76;
+    --md-red-80: #ffb4ba;
+    --md-red-90: #ffdad6;
+    --md-red-95: #ffedeb;
+    --md-red-99: #fffbfa;
+    --md-neutral-10: #1a1b1f;
+    --md-neutral-80: #c9c7d0;
+    --md-neutral-90: #e6e1e5;
+    --md-success: #22a575;
+
+    --cor-fundo: var(--md-red-99);
+    --cor-texto: var(--md-neutral-10);
+    --cor-superficie: var(--md-red-95);
+    --cor-primaria: var(--md-red-50);
+    --cor-on-primaria: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --cor-fundo: var(--md-red-10);
+        --cor-texto: var(--md-red-95);
+        --cor-superficie: var(--md-red-20);
+        --cor-primaria: var(--md-red-80);
+        --cor-on-primaria: var(--md-red-10);
+    }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    transition: background-color 0.4s;
+}
+
+#secao-intro {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.container-digitacao {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    min-height: 150px;
+    max-width: 600px;
+}
+
+.cursor-digitacao::after {
+    content: '|';
+    animation: piscar 1s step-start infinite;
+}
+
+@keyframes piscar { 50% { opacity: 0; } }
+
+.botao-material-play {
+    background-color: var(--cor-primaria);
+    color: var(--cor-on-primaria);
+    border: none;
+    border-radius: 50px;
+    padding: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    width: 220px;
+    height: 56px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.preenchedor {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background-color: var(--md-red-30);
+    z-index: 2;
+    transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.botao-material-play.ativo .preenchedor {
+    width: 100%;
+}
+
+.texto-botao {
+    z-index: 1;
+    position: relative;
+}
+
+.card-player {
+    background-color: var(--cor-superficie);
+    border-radius: 24px;
+    padding: 1.5rem;
+    width: 320px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    opacity: 0;
+    animation: surgirCard 0.8s ease forwards;
+}
+
+.sumir-com-fade {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.8s ease-out;
+}
+
+@keyframes surgirCard {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.topo-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.visualizador-icone {
+    width: 50px;
+    height: 50px;
+    background-color: var(--cor-fundo);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.barras-sonoras {
+    display: flex;
+    gap: 3px;
+    height: 20px;
+    align-items: flex-end;
+}
+
+.barra {
+    width: 4px;
+    background-color: var(--md-success);
+    border-radius: 2px;
+    transform-origin: bottom;
+}
+
+.pausado .barra {
+    animation: none !important;
+    height: 4px !important;
+}
+
+.b1 { animation: tocar 1s infinite ease-in-out; animation-delay: 0.1s; }
+.b2 { animation: tocar 1s infinite ease-in-out; animation-delay: 0.3s; }
+.b3 { animation: tocar 1s infinite ease-in-out; animation-delay: 0.0s; }
+
+@keyframes tocar {
+    0%, 100% { height: 4px; }
+    50% { height: 20px; }
+}
+
+.textos-musica {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.titulo-musica {
+    color: var(--cor-texto);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.autor-musica {
+    color: var(--md-neutral-80);
+    font-size: 0.9rem;
+}
+
+.tempo-musica {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.texto-tempo {
+    font-size: 0.8rem;
+    color: var(--md-neutral-80);
+    font-variant-numeric: tabular-nums;
+    min-width: 35px;
+}
+
+.container-barra {
+    flex: 1;
+    height: 6px;
+    background-color: var(--md-neutral-80);
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+}
+
+.barra-preenchimento {
+    height: 100%;
+    background-color: var(--cor-primaria);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.controles-player {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--cor-texto);
+}
+
+.grupo-volume {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    width: 40px;
+    justify-content: center;
+}
+
+.icone-volume {
+    width: 24px;
+    height: 24px;
+}
+
+.slider-volume {
+    position: absolute;
+    left: 25px;
+    background: var(--cor-fundo);
+    border: 1px solid var(--md-neutral-80);
+    width: 0;
+    opacity: 0;
+    height: 24px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+    transition: width 0.2s, opacity 0.2s;
+    overflow: hidden;
+}
+
+.grupo-volume:hover .slider-volume {
+    width: 80px;
+    opacity: 1;
+}
+
+.preenchimento-volume {
+    height: 4px;
+    background-color: var(--cor-primaria);
+    border-radius: 2px;
+    width: 80%;
+}
+
+.pino-volume {
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    right: 10%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.grupo-play-pause {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icone-controle {
+    width: 56px;
+    height: 56px;
+    cursor: pointer;
+    color: var(--cor-primaria);
+    transition: transform 0.1s;
+}
+
+.icone-controle:hover {
+    transform: scale(1.1);
+}
+
+.espaco-direito {
+    width: 40px;
+}
+
+#secao-galeria {
+    display: none;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    animation: aparecer 1s ease;
+    position: relative;
+    z-index: 1; /* Para ficar acima da neve */
+}
+
+.cabecalho-galeria h1 {
+    color: var(--cor-primaria);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    font-size: 2.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Leve sombra para destaque na neve */
+}
+
+.grid-galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+    padding-bottom: 4rem;
+}
+
+.card-midia {
+    background-color: var(--cor-superficie);
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s;
+    position: relative;
+    animation: surgirCard 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.card-midia:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    z-index: 2;
+}
+
+.card-midia img, .card-midia video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card-midia:hover img, .card-midia:hover video {
+    transform: scale(1.1);
+}
+
+.overlay-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    pointer-events: none;
+}
+
+.card-midia:hover .overlay-card {
+    opacity: 1;
+}
+
+.video-indicator {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255,255,255,0.9);
+    color: var(--md-neutral-10);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.widget-musica-galeria {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: var(--cor-superficie);
+    padding: 12px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    z-index: 100;
+    width: fit-content;
+    max-width: 300px;
+    opacity: 0;
+    animation: surgirCard 1s 1s forwards;
+}
+
+.musica-info-mini {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--cor-texto);
+}
+
+.icone-nota {
+    color: var(--cor-primaria);
+}
+
+.controles-mini {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#galeria-btn-play-pause {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--cor-texto);
+    transition: color 0.2s;
+}
+
+#galeria-btn-play-pause:hover {
+    color: var(--cor-primaria);
+}
+
+.slider-mini-container {
+    width: 60px;
+    display: flex;
+    align-items: center;
+}
+
+#galeria-volume {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--md-neutral-80);
+    border-radius: 2px;
+    outline: none;
+}
+
+#galeria-volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--cor-primaria);
+    cursor: pointer;
+}
+
+.rodape-galeria {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 2rem;
+    border-top: 1px solid var(--md-neutral-90);
+    margin-top: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.botao-rodape {
+    padding: 12px 32px;
+    border-radius: 50px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.botao-rodape:nth-child(1) {
+    background-color: var(--md-neutral-20);
+    color: var(--cor-texto);
+}
+
+.botao-rodape:nth-child(2) {
+    background-color: var(--cor-primaria);
+    color: var(--cor-on-primaria);
+}
+
+.botao-rodape:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    filter: brightness(1.05);
+}
+
+/* --- EFEITO DE NEVE LEVE --- */
+#snow-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.snowflake {
+    position: absolute;
+    top: -10px;
+    color: white;
+    opacity: 0.8;
+    font-size: 1rem;
+    user-select: none;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh); }
+}
+
+/* --- SISTEMA DE MODAL E ANIMAÇÃO GENÉRICO --- */
+dialog {
+    border: none;
+    border-radius: 28px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    background: var(--cor-superficie);
+    color: var(--cor-texto);
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    margin: auto;
+    
+    /* Animação Padrão */
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+dialog::backdrop {
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+dialog.dialog-animado {
+    opacity: 1;
+    transform: scale(1);
+}
+
+dialog.dialog-animado::backdrop {
+    opacity: 1;
+}
+
+.dialog-conteudo h2 {
+    margin-bottom: 16px;
+    font-size: 1.5rem;
+    color: var(--cor-primaria);
+}
+
+.dialog-conteudo p {
+    margin-bottom: 24px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--md-neutral-80);
+}
+
+.dialog-botoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.botao-secundario, .botao-primario {
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.botao-secundario {
+    background: transparent;
+    color: var(--cor-primaria);
+}
+
+.botao-secundario:hover {
+    background-color: rgba(194, 62, 94, 0.08); 
+}
+
+.botao-primario {
+    background: var(--cor-primaria);
+    color: var(--cor-on-primaria);
+}
+
+.botao-primario:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Lightbox específico */
+dialog#lightbox-fotos {
+    background: rgba(0,0,0,0.95);
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 0;
+    border-radius: 0;
+    transform: scale(1); 
+    opacity: 0;
+}
+
+dialog#lightbox-fotos.dialog-animado {
+    opacity: 1;
+    transform: scale(1);
+}
+
+dialog#lightbox-fotos::backdrop {
+    background: transparent; 
+    backdrop-filter: none;
+}
+
+.conteudo-lightbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+dialog#lightbox-fotos.dialog-animado .conteudo-lightbox {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.midia-lightbox {
+    max-width: 90%;
+    max-height: 80vh;
+    border-radius: 8px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.botao-fechar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 10;
+    transition: transform 0.2s;
+}
+
+.botao-fechar:hover {
+    transform: scale(1.1) rotate(90deg);
+}
+
+@keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }

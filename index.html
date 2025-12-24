@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Evelyn</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main id="secao-intro">
+        <div class="container-digitacao" id="texto-digitado"></div>
+        
+        <!-- Botão Inicial -->
+        <div id="wrapper-botao-iniciar" style="opacity: 0; transition: opacity 0.5s;">
+            <button id="botao-iniciar" class="botao-material-play">
+                <div class="preenchedor"></div>
+                <span class="texto-botao">Ver Surpresa</span>
+            </button>
+        </div>
+
+        <!-- Player do Áudio 1 (ForYou) -->
+        <div id="wrapper-player-musica" style="display: none;">
+            <div class="card-player">
+              <div class="topo-info">
+                <div class="visualizador-icone">
+                  <div class="barras-sonoras">
+                    <div class="barra b1"></div>
+                    <div class="barra b2"></div>
+                    <div class="barra b3"></div>
+                  </div>
+                </div>
+                <div class="textos-musica">
+                  <p class="titulo-musica">Oi meu bem:)</p>
+                  <p class="autor-musica">Eu</p>
+                </div>
+              </div>
+            
+              <div class="tempo-musica">
+                <p class="texto-tempo tempo-atual" id="tempo-atual">0:00</p>
+                <div class="container-barra" id="container-barra">
+                  <div class="barra-preenchimento" id="barra-progresso"></div>
+                </div>
+                <p class="texto-tempo tempo-total" id="tempo-total">0:00</p>
+              </div>
+            
+              <div class="controles-player">
+                <div class="grupo-volume">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-volume">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <div class="slider-volume" id="slider-volume">
+                      <div class="preenchimento-volume" id="nivel-volume"></div>
+                      <div class="pino-volume" id="pino-volume"></div>
+                    </div>
+                </div>
+                
+                <div class="grupo-play-pause">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icone-controle icone-play" id="btn-play">
+                        <path d="M3 22v-20l18 10-18 10z"></path>
+                    </svg>
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icone-controle icone-pause" id="btn-pause" style="display: none;">
+                        <path d="M6 4h4v16h-4zM14 4h4v16h-4z"></path>
+                    </svg>
+                </div>
+
+                <div class="espaco-direito"></div>
+              </div>
+            </div>
+        </div>
+
+        <!-- Botão para Galeria -->
+        <div id="wrapper-botao-galeria" style="opacity: 0; pointer-events: none; transition: opacity 0.5s; margin-top: 2rem;">
+            <button id="botao-ir-galeria" class="botao-material-play">
+                <div class="preenchedor"></div>
+                <span class="texto-botao">Ir para Galeria</span>
+            </button>
+        </div>
+    </main>
+
+    <main id="secao-galeria" class="oculto">
+        <!-- Container de Neve -->
+        <div id="snow-container"></div>
+
+        <!-- Controle de Música da Galeria -->
+        <div class="widget-musica-galeria" id="widget-musica-galeria">
+            <div class="musica-info-mini">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-nota"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                <span>Tocando: Sensational</span>
+            </div>
+            <div class="controles-mini">
+                <button id="galeria-btn-play-pause" title="Pausar/Tocar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="icone-p"><path d="M6 4h4v16h-4zM14 4h4v16h-4z"></path></svg>
+                </button>
+                <div class="slider-mini-container">
+                    <input type="range" id="galeria-volume" min="0" max="1" step="0.1" value="0.5">
+                </div>
+            </div>
+        </div>
+
+        <header class="cabecalho-galeria">
+            <h1>A gente:D</h1>
+        </header>
+        <div class="grid-galeria" id="grid-galeria"></div>
+        
+        <div class="rodape-galeria">
+            <button id="btn-repositorio" class="botao-rodape">Repositório</button>
+            <button id="btn-diversao" class="botao-rodape">Diversão!</button>
+        </div>
+    </main>
+
+    <audio id="audio-foryou" src="Musicas/foryou.m4a"></audio>
+    <audio id="audio-sensational" src="Musicas/sensational.mp3"></audio>
+
+    <!-- Lightbox de Imagens -->
+    <dialog id="lightbox-fotos">
+        <div class="conteudo-lightbox">
+            <button class="botao-fechar" id="botao-fechar-lightbox">&times;</button>
+            <div id="alvo-lightbox"></div>
+        </div>
+    </dialog>
+
+    <!-- Modal Repositório -->
+    <dialog id="modal-repositorio" class="dialog-material">
+        <div class="dialog-conteudo">
+            <h2>Repositório</h2>
+            <p>Aqui, voce podera ir pro github e ver como o projeto é construido. Quer ir?</p>
+            <div class="dialog-botoes">
+                <button class="botao-secundario" id="fechar-repo">Voltar</button>
+                <button class="botao-primario" id="ir-repo">Ir agora</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Modal Diversão -->
+    <dialog id="modal-diversao" class="dialog-material">
+        <div class="dialog-conteudo">
+            <h2>Diversão!</h2>
+            <p>Diversão poxa:D fiz uns joguinhos em logica simples de JS e HTML pra voce, so pra passar o tempo:) Quer ir?</p>
+            <div class="dialog-botoes">
+                <button class="botao-secundario" id="fechar-diversao">Voltar</button>
+                <button class="botao-primario" id="ir-diversao">Jogar!</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
